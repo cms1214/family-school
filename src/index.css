@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'HarmonyOS Sans';
+    src: url('@/assets/fonts/HarmonyOS Sans/HarmonyOS_Sans_Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'HarmonyOS Sans';
+    src: url('@/assets/fonts/HarmonyOS Sans/HarmonyOS_Sans_Medium.ttf') format('truetype');
+    font-weight: 600;
+}
+@font-face {
+    font-family: 'HarmonyOS Sans';
+    src: url('@/assets/fonts/HarmonyOS Sans/HarmonyOS_Sans_Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'HarmonyOS Sans';
+    src: url('@/assets/fonts/HarmonyOS Sans/HarmonyOS_Sans_thin.ttf') format('truetype');
+    font-weight: 200;
+}
+@font-face {
+    font-family: 'HarmonyOS Sans';
+    src: url('@/assets/fonts/HarmonyOS Sans/HarmonyOS_Sans_Light.ttf') format('truetype');
+    font-weight: 100;
+}
+
+body{
+    font-family: HarmonyOS Sans !important;
+    font-weight: 400;
+    color: #2D3748;
+    background-color: #F7FAFC;
+}
