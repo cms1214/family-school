@@ -1,5 +1,6 @@
 import axios from "axios";
-import {ElLoading, ElMessage} from "element-plus";
+import {ElLoading, ElMessage, ElNotification} from "element-plus";
+import {h} from "vue";
 
 let loadingObject = null;//创建一个loding 这里不能用const来定义，因为需要修改loadingObject的值
 
@@ -41,10 +42,15 @@ instance.interceptors.response.use(
         loadingObject.close();     // 关闭动画
         const data = response.data;//获取响应数据
         if (data.code !== 0) {     //响应码不为0，显示错误消息
-            ElMessage({
-                message: data.message || '网络出错',  //提示错误消息
-                type: 'error',                      //消息类型
-                duration: 5 * 1000,                 //持续5秒
+            // ElMessage({
+            //     message: data.message || '网络出错',  //提示错误消息
+            //     type: 'error',                      //消息类型
+            //     duration: 5 * 1000,                 //持续5秒
+            // })
+            ElNotification({
+                title: '登陆失败',
+                message: h('i', { style: 'color: teal' }, data.message),
+                type: 'error',
             })
             return data
         } else {
@@ -55,11 +61,16 @@ instance.interceptors.response.use(
     function (error) {    // 响应失败
         loadingObject.close();      // 关闭动画
         console.log('err' + error)  // 打印错误信息
-        ElMessage({
-            message: error.message, //提示错误消息
-            type: "error",
-            duration: 5 * 1000,     //持续5秒
-        });
+        // ElMessage({
+        //     message: error.message, //提示错误消息
+        //     type: "error",
+        //     duration: 5 * 1000,     //持续5秒
+        // });
+        ElNotification({
+            title: '登陆失败',
+            message: h('i', { style: 'color: teal' }, error.message),
+            type: 'error',
+        })
         return error;
     }
 );

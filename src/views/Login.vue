@@ -9,6 +9,19 @@ const account = ref('')
 const select = ref('1')
 const password = ref('')
 
+const tryLogin = () => {
+  if(account.value && password.value){
+    login()
+  }else{
+    ElNotification({
+      title: '登陆失败',
+      message: h('i', { style: 'color: teal' }, '请输入完整的账号或密码'),
+      type: 'error',
+    })
+  }
+
+}
+
 const login = () => {
   loginApi({
     xuehao: account.value,
@@ -71,7 +84,7 @@ const getTime = () => {
         </el-input>
 
         <div class="submit">
-          <el-button class="bt" type="primary" size="large" @click="login">登录</el-button>
+          <el-button class="bt" type="primary" size="large" @click="tryLogin">登录</el-button>
         </div>
 
         <div class="footer">
