@@ -3,5 +3,9 @@
 </script>
 
 <template>
-<router-view></router-view>
+注册界面
 </template>
+
+<style scoped>
+
+</style>
