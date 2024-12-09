@@ -1,9 +1,35 @@
 <script setup>
-import {ref} from "vue";
+import {getCurrentWatcher, h, ref} from "vue";
+import {loginApi} from "@/api/user.js";
+import router from "@/router/router.js";
+import {ElNotification} from "element-plus";
+
 
 const account = ref('')
 const select = ref('1')
 const password = ref('')
+
+const login = () => {
+  loginApi({
+    xuehao: account.value,
+    studentPwd: password.value
+  }).then(res=>{
+    console.log(res)
+    if(res.code===0){
+      router.push("/")
+      ElNotification({
+        title: '登陆成功',
+        message: h('i', { style: 'color: teal' }, '家校通服务平台，欢迎回来'),
+        type: 'success',
+      })
+    }
+  })
+}
+
+const getTime = () => {
+  const hour = new Date().getHours()
+  return hour < 12 ? 'Morning' : hour < 18 ? 'Afternoon' : 'Evening'
+}
 </script>
 
 <template>
@@ -18,10 +44,11 @@ const password = ref('')
 
         <h2>学号/工号</h2>
         <el-input
-            size="large"
-            v-model="account"
-            placeholder="请输入学号/工号"
-            class="input-with-select"
+          size="large"
+          v-model="account"
+          placeholder="请输入学号/工号"
+          class="input-with-select"
+          clearable
         >
           <template #prepend>
             <el-select v-model="select" style="width: 80px;" size="large">
@@ -39,15 +66,16 @@ const password = ref('')
             placeholder="请输入密码"
             class="input-with-select"
             type="password"
+            clearable
         >
         </el-input>
 
         <div class="submit">
-          <el-button class="bt" type="primary" size="large">登录</el-button>
+          <el-button class="bt" type="primary" size="large" @click="login">登录</el-button>
         </div>
 
         <div class="footer">
-          <h1>还没有账号？<span type="primary">马上注册👉</span></h1>
+          <h1>还没有账号？ <router-link to="/register"><span type="primary">马上注册👉</span></router-link></h1>
           <p>Powered by Tang</p>
         </div>
 
@@ -55,8 +83,8 @@ const password = ref('')
     </el-col>
     <el-col :span="16">
       <div class="background">
-        <h1>Good Morning</h1>
-        <p>Mianyang,Sichuan</p>
+        <h1>Good {{getTime()}}</h1>
+        <p>Mianyang, Sichuan</p>
       </div>
     </el-col>
   </el-row>

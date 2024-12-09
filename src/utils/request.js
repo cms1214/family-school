@@ -5,7 +5,7 @@ let loadingObject = null;//创建一个loding 这里不能用const来定义，�
 
 // 创建axios实例
 const instance = axios.create({
-    baseURL: "http://localhost:8091", // 替换为你的 IP 和端口
+    baseURL: "http://192.168.110.16:1314", // 替换为你的 IP 和端口
     timeout: 8000, // 请求超时时间
     headers: {
         "Content-Type": "application/json; charset=utf-8",// 设置请求头的 Content-Type 为 application/json
