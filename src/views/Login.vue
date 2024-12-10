@@ -1,17 +1,17 @@
 <script setup>
-import {getCurrentWatcher, h, ref} from "vue";
-import {loginApi} from "@/api/user.js";
+import { h, ref} from "vue";
+import {loginParentApi, loginStudentApi, loginTeacherApi} from "@/api/user.js";
 import router from "@/router/router.js";
 import {ElNotification} from "element-plus";
-
 
 const account = ref('')
 const select = ref('1')
 const password = ref('')
 
+
 const tryLogin = () => {
   if(account.value && password.value){
-    login()
+    select.value === '1' ? loginStudent() : select.value === '2' ? loginParent() : loginTeacher()
   }else{
     ElNotification({
       title: '登陆失败',
@@ -21,22 +21,49 @@ const tryLogin = () => {
   }
 }
 
-const login = () => {
-  loginApi({
+const loginStudent = () => {
+  loginStudentApi({
     xuehao: account.value,
     studentPwd: password.value
   }).then(res=>{
-    console.log(res)
     if(res.code===0){
-      router.push("/")
-      ElNotification({
-        title: '登陆成功',
-        message: h('i', { style: 'color: teal' }, '家校通服务平台，欢迎回来'),
-        type: 'success',
-      })
+      loginOK(res)
     }
   })
 }
+const loginParent = () => {
+  loginParentApi({
+    account: account.value,
+    parentPwd: password.value
+  }).then(res=>{
+    if(res.code===0){
+      loginOK(res)
+    }
+  })
+}
+const loginTeacher = () => {
+  loginTeacherApi({
+    gonghao: account.value,
+    teacherPwd: password.value
+  }).then(res=>{
+    if(res.code===0){
+      loginOK(res)
+    }
+  })
+}
+
+
+const loginOK = (res)=>{
+  localStorage.setItem('token', res.data.token)
+
+  router.push("/")
+  ElNotification({
+    title: '登陆成功',
+    message: h('i', { style: 'color: teal' }, '家校通服务平台，欢迎回来'),
+    type: 'success',
+  })
+}
+
 
 const getTime = () => {
   const hour = new Date().getHours()

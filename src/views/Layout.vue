@@ -1,6 +1,7 @@
 <script setup>
-import {ref} from "vue";
+import {h, ref} from "vue";
 import router from "@/router/router.js";
+import {ElNotification} from "element-plus";
 
 const activeIndex = ref(0);
 const setActive = (index) => {
@@ -8,8 +9,13 @@ const setActive = (index) => {
 }
 
 const exit = () => {
-  console.log('退出')
+  localStorage.removeItem('token')
   router.push('/login')
+  ElNotification({
+    title: '退出成功',
+    message: h('i', { style: 'color: teal' }, '请重新登录'),
+    type: 'success',
+  })
 }
 </script>
 

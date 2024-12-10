@@ -132,7 +132,7 @@ const rules = ref({
         <div class="input_item">
           <h2>学号/工号</h2>
           <el-form-item prop="id">
-            <el-input placeholder="请输入学号/工号" v-model="ruleForm.id"  size="large">
+            <el-input placeholder="请输入学号/工号" v-model="ruleForm.id"  size="large" clearable>
               <template #prepend>
                 <el-select v-model="select" style="width: 80px" size="large">
                   <el-option label="一班" value="1" />
@@ -147,14 +147,14 @@ const rules = ref({
         <div class="input_item">
           <h2>密码</h2>
           <el-form-item prop="pwd">
-            <el-input placeholder="请输入密码" v-model="ruleForm.pwd" type="password" size="large"></el-input>
+            <el-input placeholder="请输入密码" v-model="ruleForm.pwd" type="password" size="large" clearable></el-input>
           </el-form-item>
         </div>
 
         <div class="input_item">
           <h2>确认密码</h2>
           <el-form-item prop="confirm">
-            <el-input placeholder="请再次输入密码" v-model="ruleForm.confirm" type="password" size="large"></el-input>
+            <el-input placeholder="请再次输入密码" v-model="ruleForm.confirm" type="password" size="large" clearable></el-input>
           </el-form-item>
         </div>
 

@@ -1,7 +1,7 @@
 import {post,get} from '@/utils/request.js'
 
 // 登录接口
-export const loginApi=data=>{
+export const loginStudentApi=data=>{
     return post({
         // 请求的地址
         url:'/api/students/login',
@@ -9,6 +9,23 @@ export const loginApi=data=>{
     })
 }
 
+export const loginParentApi=data=>{
+    return post({
+        // 请求的地址
+        url:'/api/parents/login',
+        data
+    })
+}
+
+export const loginTeacherApi=data=>{
+    return post({
+        // 请求的地址
+        url:'/api/teachers/login',
+        data
+    })
+}
+
+//注册接口
 export const registerStudentApi=data=>{
     return post({
         // 请求的地址
