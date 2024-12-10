@@ -1,6 +1,12 @@
 <script setup>
+
 </script>
 
 <template>
-<router-view></router-view>
+  公告
+  新闻
 </template>
+
+<style scoped>
+
+</style>

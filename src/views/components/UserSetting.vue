@@ -1,6 +1,11 @@
 <script setup>
+
 </script>
 
 <template>
-<router-view></router-view>
+用户设置
 </template>
+
+<style scoped>
+
+</style>

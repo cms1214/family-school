@@ -1,12 +1,10 @@
 <script setup>
-import {h, ref} from "vue";
+import {h, onMounted, ref} from "vue";
 import router from "@/router/router.js";
 import {ElNotification} from "element-plus";
+import { useRoute } from 'vue-router';
 
-const activeIndex = ref(0);
-const setActive = (index) => {
-  activeIndex.value = index;
-}
+const route = useRoute();
 
 const exit = () => {
   localStorage.removeItem('token')
@@ -17,6 +15,74 @@ const exit = () => {
     type: 'success',
   })
 }
+
+// 点击时变更样式
+const activeIndex = ref(0);
+const headTitle = ref('')
+const setActive = (index) => {
+  activeIndex.value = index
+}
+// 根据不同的路径变更按钮和header样式
+onMounted(()=>{
+  let path = route.path
+  console.log(path)
+  switch (path) {
+    case '/home':
+      activeIndex.value = 0
+        headTitle.value = '主页'
+      break
+    case '/study':
+      activeIndex.value = 1
+        headTitle.value = '学习'
+      break
+    case '/status':
+      activeIndex.value = 2
+        headTitle.value = '孩子情况'
+      break
+    case '/manage':
+      activeIndex.value = 3
+        headTitle.value = '班级管理'
+      break
+    case '/activity':
+      activeIndex.value = 4
+        headTitle.value = '班级活动'
+      break
+    case '/setting':
+      activeIndex.value = 5
+        headTitle.value = '用户设置'
+     break
+  }
+
+})
+
+// 定义跳转的界面
+const toHome = ()=>{
+  headTitle.value = '主页'
+  router.push("/home")
+}
+const toStudy = ()=>{
+  headTitle.value = '学习'
+  router.push("/study")
+}
+const toStatus = ()=>{
+  headTitle.value = '孩子情况'
+  router.push("/status")
+}
+const toManager = ()=>{
+  headTitle.value = '班级管理'
+  router.push("/manage")
+}
+const toActivity = ()=>{
+  headTitle.value = '班级活动'
+  router.push("/activity")
+}
+const toSetting = ()=>{
+  headTitle.value = '用户设置'
+  router.push("/setting")
+}
+
+// 不同用户看到的导航栏不同
+const userType = localStorage.getItem('role')
 </script>
 
 <template>
@@ -24,34 +90,69 @@ const exit = () => {
   <div class="nav">
     <h1 class="title"><i class="bi bi-feather"></i>家校通服务平台</h1>
     <div class="line"></div>
-    <div class="menu-list" :class="{ active: activeIndex === 0 }" @click="setActive(0)">
+
+    <div class="menu-list" :class="{ active: activeIndex === 0 }" @click="setActive(0),toHome()" >
       <div class="icon">
         <i class="bi bi-house-fill"></i>
       </div>
       <h3>主页</h3>
     </div>
-    <div class="menu-list" :class="{ active: activeIndex === 1 }" @click="setActive(1)">
+
+<!----------------------------------------学生能看到的------------------------------------------->
+    <div
+      class="menu-list"
+      :class="{ active: activeIndex === 1 }"
+      @click="setActive(1),toStudy()"
+      v-if="userType==='1'"
+    >
       <div class="icon">
         <i class="bi bi-book-half"></i>
       </div>
-      <h3>作业</h3>
+      <h3>学习</h3>
     </div>
-    <div class="menu-list" :class="{ active: activeIndex === 2 }" @click="setActive(2)">
+<!-----------------------------------------家长能看到的-------------------------------------------->
+    <div
+      class="menu-list"
+      :class="{ active: activeIndex === 2 }"
+      @click="setActive(2),toStatus()"
+      v-if="userType==='2'"
+    >
+      <div class="icon">
+        <i class="bi bi-heart-half"></i>
+      </div>
+      <h3>孩子情况</h3>
+    </div>
+<!-----------------------------------------老师能看到的-------------------------------------------->
+    <div
+      class="menu-list"
+      :class="{ active: activeIndex === 3 }"
+      @click="setActive(3),toManager()"
+      v-if="userType==='3'"
+    >
       <div class="icon">
         <i class="bi bi-people-fill"></i>
       </div>
-      <h3>学生列表</h3>
+      <h3>班级管理</h3>
     </div>
 
+    <!--每个人都有，但是看到的部分不一样-->
+    <div class="menu-list" :class="{ active: activeIndex === 4 }" @click="setActive(4),toActivity()">
+      <div class="icon">
+        <i class="bi bi-balloon-fill"></i>
+      </div>
+      <h3>班级活动</h3>
+    </div>
+
+    <!--每个人都有-->
     <h2>账户管理</h2>
 
-    <div class="menu-list" :class="{ active: activeIndex === 3 }" @click="setActive(3)">
+    <div class="menu-list" :class="{ active: activeIndex === 5 }" @click="setActive(5),toSetting()">
       <div class="icon">
         <i class="bi bi-person-lines-fill"></i>
       </div>
       <h3>账户设置</h3>
     </div>
-    <div class="menu-list" :class="{ active: activeIndex === 4 }" @click="setActive(4),exit()">
+    <div class="menu-list" :class="{ active: activeIndex === 6 }" @click="setActive(6),exit()">
       <div class="icon">
         <i class="bi bi-box-arrow-left"></i>
       </div>
@@ -70,8 +171,8 @@ const exit = () => {
   <div class="container max-w-full">
     <div class="header">
       <div class="left">
-        <p>页面 / 主页</p>
-        <h1>主页</h1>
+        <p>页面 / {{headTitle}}</p>
+        <h1>{{ headTitle }}</h1>
       </div>
       <div class="right">
         <div class="search">
@@ -85,7 +186,7 @@ const exit = () => {
 
     <div class="body">
       <div class="main" style="height: 1200px;">
-        Main
+        <router-view></router-view>
       </div>
       <div class="footer">
         <p>@2024.12，made by GROUPE3 for a better web.</p>
@@ -96,6 +197,9 @@ const exit = () => {
   <div class="bg-img"></div>
   <div class="bg-cover"></div>
 </template>
+
+
+
 
 <style scoped>
 .container{
@@ -160,11 +264,13 @@ const exit = () => {
   border-radius: 10px;
   margin-right: 15px;
   margin-left: 12px;
+  transition: 200ms;
 }
 .nav .menu-list h3{
   color: #A0AEC0;
   font-weight: 700;
   font-size: 15px;
+  transition: 200ms;
 }
 
 .nav .active{

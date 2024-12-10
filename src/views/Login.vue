@@ -1,13 +1,13 @@
 <script setup>
-import { h, ref} from "vue";
+import {h, ref} from "vue";
 import {loginParentApi, loginStudentApi, loginTeacherApi} from "@/api/user.js";
 import router from "@/router/router.js";
 import {ElNotification} from "element-plus";
 
 const account = ref('')
-const select = ref('1')
 const password = ref('')
 
+const select = ref('1')
 
 const tryLogin = () => {
   if(account.value && password.value){
@@ -54,6 +54,7 @@ const loginTeacher = () => {
 
 
 const loginOK = (res)=>{
+  localStorage.setItem('role', select.value)
   localStorage.setItem('token', res.data.token)
 
   router.push("/")
