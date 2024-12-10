@@ -19,7 +19,6 @@ const tryLogin = () => {
       type: 'error',
     })
   }
-
 }
 
 const login = () => {
@@ -184,6 +183,7 @@ const getTime = () => {
   padding-left: 60px;
   color: white;
   font-weight: 700;
+  user-select: none;
   animation: bg_slide 40s linear forwards;
 }
 @keyframes bg_slide {

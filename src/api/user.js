@@ -8,3 +8,25 @@ export const loginApi=data=>{
         data
     })
 }
+
+export const registerStudentApi=data=>{
+    return post({
+        // 请求的地址
+        url:'/api/students/register',
+        data
+    })
+}
+export const registerTeacherApi=data=>{
+    return post({
+        // 请求的地址
+        url:'/api/teachers/register',
+        data
+    })
+}
+export const registerParentApi=data=>{
+    return post({
+        // 请求的地址
+        url:'/api/parents/register',
+        data
+    })
+}

@@ -48,7 +48,7 @@ instance.interceptors.response.use(
             //     duration: 5 * 1000,                 //持续5秒
             // })
             ElNotification({
-                title: '登陆失败',
+                title: '出错',
                 message: h('i', { style: 'color: teal' }, data.message),
                 type: 'error',
             })
@@ -67,7 +67,7 @@ instance.interceptors.response.use(
         //     duration: 5 * 1000,     //持续5秒
         // });
         ElNotification({
-            title: '登陆失败',
+            title: '出错',
             message: h('i', { style: 'color: teal' }, error.message),
             type: 'error',
         })
