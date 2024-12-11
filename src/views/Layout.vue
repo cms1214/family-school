@@ -3,7 +3,6 @@ import {h, onMounted, ref} from "vue";
 import router from "@/router/router.js";
 import {ElNotification} from "element-plus";
 import { useRoute } from 'vue-router';
-
 const route = useRoute();
 
 const exit = () => {
@@ -22,10 +21,9 @@ const headTitle = ref('')
 const setActive = (index) => {
   activeIndex.value = index
 }
-// 根据不同的路径变更按钮和header样式
+// 刷新时根据不同的路径变更按钮和header样式
 onMounted(()=>{
   let path = route.path
-  console.log(path)
   switch (path) {
     case '/home':
       activeIndex.value = 0
@@ -55,7 +53,7 @@ onMounted(()=>{
 
 })
 
-// 定义跳转的界面
+// 定义按钮跳转的界面并修改header样式
 const toHome = ()=>{
   headTitle.value = '主页'
   router.push("/home")
@@ -135,8 +133,13 @@ const userType = localStorage.getItem('role')
       <h3>班级管理</h3>
     </div>
 
-    <!--每个人都有，但是看到的部分不一样-->
-    <div class="menu-list" :class="{ active: activeIndex === 4 }" @click="setActive(4),toActivity()">
+    <!------------------------------老师和家长有，但是看到的部分不一样----------------------------------->
+    <div
+      class="menu-list"
+      :class="{ active: activeIndex === 4 }"
+      @click="setActive(4),toActivity()"
+      v-if="userType!=='1'"
+    >
       <div class="icon">
         <i class="bi bi-balloon-fill"></i>
       </div>
@@ -163,7 +166,9 @@ const userType = localStorage.getItem('role')
 
     <h4>需要帮助？</h4>
     <p>点击这里获取帮助</p>
-    <input type="button" value="联系班主任">
+    <input v-if="userType==='3'" type="button" value="反馈管理员" >
+    <input v-else  type="button" value="联系班主任">
+
 
 
   </div>
@@ -185,9 +190,7 @@ const userType = localStorage.getItem('role')
     </div>
 
     <div class="body">
-      <div class="main" style="height: 1200px;">
         <router-view></router-view>
-      </div>
       <div class="footer">
         <p>@2024.12，made by GROUPE3 for a better web.</p>
       </div>
@@ -384,6 +387,7 @@ const userType = localStorage.getItem('role')
   cursor: pointer;
 }
 
+/*消失的.main*/
 .body .main{
   background: white;
   border-radius: 15px;

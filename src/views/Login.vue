@@ -56,6 +56,7 @@ const loginTeacher = () => {
 const loginOK = (res)=>{
   localStorage.setItem('role', select.value)
   localStorage.setItem('token', res.data.token)
+  localStorage.setItem('user', account.value)
 
   router.push("/")
   ElNotification({

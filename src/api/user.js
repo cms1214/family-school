@@ -1,4 +1,4 @@
-import {post,get} from '@/utils/request.js'
+import {post,get,put} from '@/utils/request.js'
 
 // 登录接口
 export const loginStudentApi=data=>{
@@ -44,6 +44,22 @@ export const registerParentApi=data=>{
     return post({
         // 请求的地址
         url:'/api/parents/register',
+        data
+    })
+}
+
+
+// 根据学号获取学生信息
+export const getStudentInfoApi=xuehao=>{
+    return get({
+        url:`/api/students/get/${xuehao}`
+    })
+}
+
+// 修改学生信息
+export const updateStudentApi=data=>{
+    return put({
+        url:`/api/students/update`,
         data
     })
 }
