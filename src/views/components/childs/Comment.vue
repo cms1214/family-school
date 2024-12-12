@@ -1,5 +1,19 @@
 <script setup>
+import {getStudentInfoApi} from "@/api/user.js";
+import {onMounted, ref} from "vue";
 
+const comment = ref('');
+
+onMounted(()=>{
+  getStudentInfoApi(localStorage.getItem("user"))
+    .then(res=>{
+        if(res.code===0){
+          // console.log(res.data)
+          comment.value = res.data.item.comment
+        }
+      }
+    )
+})
 </script>
 
 <template>
@@ -14,7 +28,7 @@
 
       </div>
       <p class="text">
-        你纯真善良，活泼可爱，对待朋友热情真诚，对老师尊敬有礼貌。学习上坚持不懈，虽然成绩不是最好的，但我知道你从没放弃，因为你知道学习的过程不仅是文化知识积累的过程，更是学会做人并不断自己完善的过程。
+        {{ comment }}
       </p>
       <p class="footer">
         @小沈老师

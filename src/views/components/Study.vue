@@ -59,7 +59,7 @@ const workData = ref([
               <el-progress :percentage="item.percentage" :show-text=false	 />
             </p>
             <p class="item5">
-              <el-button type="primary" size="mini">查看</el-button>
+              <el-button type="primary" >查看</el-button>
             </p>
           </div>
         </div>

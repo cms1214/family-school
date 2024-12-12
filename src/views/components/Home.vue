@@ -1,4 +1,24 @@
 <script setup>
+import {getNewsPageApi} from "@/api/user.js";
+import {onMounted, ref} from "vue";
+
+const data = ref({})
+
+const cPage = ref(1)
+const pageSize = ref(6)
+
+onMounted(()=>{
+  getData(cPage.value)
+})
+
+const getData = (num)=>{
+  getNewsPageApi({
+    currentPage: num,
+    pageSize: pageSize.value
+  }).then(res=>{
+    data.value = res.data.items;
+  })
+}
 
 </script>
 
@@ -20,6 +40,32 @@
         </p>
       </div>
     </div>
+
+
+    <div class="news forum">
+      <h1>校园要闻</h1>
+      <div class="list">
+
+        <div v-for="item in data.dataList" class="card">
+          <img :src="item.newImg" />
+          <div class="text">
+            <h1>{{ item.newTitle }}</h1>
+            <p class="time">{{ item.createTime }}</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="page">
+        <el-pagination
+          background layout="prev, pager, next"
+          :total="data.totalCount"
+          :page-size="pageSize"
+          @current-change="getData"
+          v-model:current-page="cPage"
+        />
+      </div>
+    </div>
+
     <div class="call forum">
       <h1>通知公告</h1>
       <div class="list">
@@ -34,27 +80,9 @@
 
       </div>
       <div class="page">
-        <el-pagination background layout="prev, pager, next" :total="100" />
+        <el-pagination background layout="prev, pager, next" :total="10" />
       </div>
 
-    </div>
-
-    <div class="news forum">
-      <h1>校园要闻</h1>
-      <div class="list">
-
-        <div v-for="item in 5" class="card">
-          <img src="@/assets/logo.png" />
-          <div class="text">
-            <h1>[公告] 2022年6月15日，校方通知[公告] 2022年6月15日，校方通知[公告] 2022年6月15日，校方通知[公告] 2022年6月15日，校方通知[公告] 2022年6月15日，校方通知</h1>
-            <p class="time">2024年12月15日</p>
-          </div>
-        </div>
-
-      </div>
-      <div class="page">
-        <el-pagination background layout="prev, pager, next" :total="100" />
-      </div>
     </div>
 
   </div>

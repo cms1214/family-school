@@ -3,18 +3,18 @@ import {onMounted} from "vue";
 import {getStudentInfoApi} from "@/api/user.js";
 
 onMounted(()=>{
-  getStudentInfoApi(localStorage.getItem("user")).then(res=>{
-    if(res.code===0){
-      console.log(res.data)
-    }
-
-  })
+  // getStudentInfoApi(localStorage.getItem("user")).then(res=>{
+  //   if(res.code===0){
+  //     console.log(res.data)
+  //   }
+  //
+  // })
 })
 </script>
 
 <template>
   <div class="contain">
-    <h1>用户设置</h1>
+    <h1>用户设置（时间不够做不完了）</h1>
   </div>
 </template>
 

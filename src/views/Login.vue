@@ -213,7 +213,7 @@ const getTime = () => {
   color: white;
   font-weight: 700;
   user-select: none;
-  animation: bg_slide 40s linear forwards;
+  animation: bg_slide 36s linear forwards;
 }
 @keyframes bg_slide {
   0%{

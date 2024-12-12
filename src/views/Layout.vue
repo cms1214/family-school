@@ -3,6 +3,7 @@ import {h, onMounted, ref} from "vue";
 import router from "@/router/router.js";
 import {ElNotification} from "element-plus";
 import { useRoute } from 'vue-router';
+import {getStudentInfoApi} from "@/api/user.js";
 const route = useRoute();
 
 const exit = () => {
@@ -21,6 +22,19 @@ const headTitle = ref('')
 const setActive = (index) => {
   activeIndex.value = index
 }
+
+// 获取头像
+const avatorURL = ref('')
+const getAvator = ()=>{
+  getStudentInfoApi(localStorage.getItem('user')).then(res=>{
+    if(res.code===0){
+      avatorURL.value = res.data.item.avatar
+    }
+  })
+}
+
+
+
 // 刷新时根据不同的路径变更按钮和header样式
 onMounted(()=>{
   let path = route.path
@@ -51,6 +65,7 @@ onMounted(()=>{
      break
   }
 
+  getAvator()
 })
 
 // 定义按钮跳转的界面并修改header样式
@@ -81,6 +96,7 @@ const toSetting = ()=>{
 
 // 不同用户看到的导航栏不同
 const userType = localStorage.getItem('role')
+
 </script>
 
 <template>
@@ -184,7 +200,7 @@ const userType = localStorage.getItem('role')
           <i class="bi bi-search"></i>
           <input type="text" placeholder="搜索"></input>
         </div>
-        <img src="../assets/logo.png">
+        <img :src="avatorURL">
         <i class="bi bi-bell-fill"></i>
       </div>
     </div>
