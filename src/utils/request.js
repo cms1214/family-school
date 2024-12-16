@@ -7,9 +7,10 @@ let loadingObject = null;//创建一个loding 这里不能用const来定义，�
 // 创建axios实例
 const instance = axios.create({
     // baseURL: "http://192.168.110.16:1314", // jifang
-    baseURL: "http://192.168.122.171:1314", // 热点
+    // baseURL: "http://192.168.122.171:1314", // 热点
     // baseURL:"http://192.168.235.171:1314", // 张热点
     // baseURL: "http://172.20.10.3:1314", // 李瑞热点
+    baseURL: "http://47.109.24.41:1314", // 服务器
     timeout: 8000, // 请求超时时间
     headers: {
         "Content-Type": "application/json; charset=utf-8",// 设置请求头的 Content-Type 为 application/json
